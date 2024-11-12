@@ -1,29 +1,23 @@
-#include <memory>
-
-class CardFactory {
-private:
-    static CardFactory* instance;
-
-    CardFactory() = default;
-
-public:
-    static CardFactory* getFactory() {
-        if (!instance) {
-            instance = new CardFactory();
-        }
-        return instance;
-    }
-
-    Deck getDeck() {
-        Deck deck;
-        // Create all 104 cards and add to the deck (e.g., 20 Blue, 18 Chili)
-        // Note: Add code here to create each card type with the correct count.
-        deck.shuffleDeck();
-        return deck;
-    }
-
-    CardFactory(const CardFactory&) = delete;
-    CardFactory& operator=(const CardFactory&) = delete;
-};
+#include "CardFactory.h"
+#include "Card.h"
 
 CardFactory* CardFactory::instance = nullptr;
+
+CardFactory::CardFactory() {
+    // Initialize card instances based on game requirements
+}
+
+CardFactory* CardFactory::getFactory() {
+    if (!instance) {
+        instance = new CardFactory();
+    }
+    return instance;
+}
+
+Deck CardFactory::getDeck() {
+    Deck deck;
+    // Create and add all required cards to the deck in correct quantities
+    // Shuffle the deck to ensure randomness
+    std::shuffle(deck.begin(), deck.end(), std::mt19937{std::random_device{}()});
+    return deck;
+}

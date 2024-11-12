@@ -1,9 +1,9 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
-#include <iostream>
 #include <string>
 #include <vector>
+#include <iostream>
 #include "Hand.h"
 #include "Chain.h"
 #include "Card.h"
@@ -23,6 +23,8 @@ private:
 
 public:
     Player(const std::string& playerName);
+    Player(std::istream& in, const CardFactory* factory);
+
     std::string getName() const;
     int getNumCoins() const;
     Player& operator+=(int additionalCoins);
@@ -37,4 +39,3 @@ public:
 };
 
 #endif // PLAYER_H
-

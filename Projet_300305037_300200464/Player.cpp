@@ -1,74 +1,66 @@
-#include <iostream>
-#include <string>
-#include <vector>
+#include "Player.h"
 #include <stdexcept>
 
-using namespace std;
+Player::Player(const std::string& playerName)
+    : name(playerName), coins(0), maxChains(2) {}
 
-class NotEnoughCoins : public runtime_error {
-public:
-    NotEnoughCoins() : runtime_error("Not enough coins to buy a third chain") {}
-};
+Player::Player(std::istream& in, const CardFactory* factory) {
+    // Logic to load player from file stream goes here
+}
 
-class Player {
-private:
-    string name;
-    int coins;
-    int maxChains;
-    vector<Chain<Card*>> chains;
-    Hand* hand;
+std::string Player::getName() const {
+    return name;
+}
 
-public:
-    Player(const string& playerName) : name(playerName), coins(0), maxChains(2) {
-        hand = new Hand();
+int Player::getNumCoins() const {
+    return coins;
+}
+
+Player& Player::operator+=(int additionalCoins) {
+    coins += additionalCoins;
+    return *this;
+}
+
+int Player::getMaxNumChains() const {
+    return maxChains;
+}
+
+int Player::getNumChains() const {
+    return chains.size();
+}
+
+Chain<Card*>& Player::operator[](int i) {
+    if (i < 0 || i >= chains.size()) {
+        throw std::out_of_range("Chain index out of range");
     }
+    return chains[i];
+}
 
-    ~Player() {
-        delete hand;
+void Player::buyThirdChain() {
+    if (coins >= 3 && maxChains == 2) {
+        coins -= 3;
+        maxChains = 3;
+    } else {
+        throw NotEnoughCoins();
     }
+}
 
-    string getName() const { return name; }
-
-    int getNumCoins() const { return coins; }
-
-    Player& operator+=(int additionalCoins) {
-        coins += additionalCoins;
-        return *this;
+void Player::printHand(std::ostream& out, bool showAll) const {
+    if (showAll) {
+        out << hand;
+    } else {
+        out << *hand.top();
     }
+}
 
-    int getMaxNumChains() const { return maxChains; }
+Hand& Player::getHand() {
+    return hand;
+}
 
-    int getNumChains() const { return chains.size(); }
-
-    Chain<Card*>& operator[](int i) {
-        if (i < 0 || i >= chains.size()) {
-            throw out_of_range("Chain index out of range");
-        }
-        return chains[i];
+std::ostream& operator<<(std::ostream& out, const Player& player) {
+    out << player.name << " " << player.coins << " coins\n";
+    for (const auto& chain : player.chains) {
+        out << chain << "\n";
     }
-
-    void buyThirdChain() {
-        if (coins >= 3 && maxChains == 2) {
-            coins -= 3;
-            maxChains = 3;
-        } else {
-            throw NotEnoughCoins();
-        }
-    }
-
-    void printHand(ostream& out, bool showAll = false) const {
-        if (showAll) {
-            out << *hand;
-        } else {
-            out << *hand->top(); // Only display the top card if showAll is false
-        }
-    }
-
-    friend ostream& operator<<(ostream& out, const Player& player) {
-        out << player.name << "    " << player.coins << " coins\n";
-        for (const auto& chain : player.chains) {
-            out << chain << "\n";
-        }
-        return out;
-    }
-};
+    return out;
+}

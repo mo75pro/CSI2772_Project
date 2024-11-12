@@ -18,6 +18,7 @@ private:
 
 public:
     Table(const std::string& player1Name, const std::string& player2Name);
+    Table(std::istream& in, const CardFactory* factory);
 
     bool win(std::string& winnerName) const;
     void printHand(bool showAll = false) const;
@@ -32,4 +33,3 @@ public:
 };
 
 #endif // TABLE_H
-

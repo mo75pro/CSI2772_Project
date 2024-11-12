@@ -1,26 +1,21 @@
-#ifndef CARD_H_INCLUDED
-#define CARD_H_INCLUDED
-#include <iostream>
-#include <fstream>
+#ifndef CARD_H
+#define CARD_H
 
 #include <iostream>
 #include <string>
-using namespace std;
 
 class Card {
 public:
-    virtual int getCardsPerCoin(int coins) const = 0; // Pure virtual function
-    virtual string getName() const = 0;
-    virtual void print(ostream& out) const = 0;
+    virtual int getCardsPerCoin(int coins) const = 0;
+    virtual std::string getName() const = 0;
+    virtual void print(std::ostream& out) const = 0;
 
-    // Virtual friend function for streaming
-    friend ostream& operator<<(ostream& out, const Card& card) {
+    friend std::ostream& operator<<(std::ostream& out, const Card& card) {
         card.print(out);
         return out;
     }
 
-    virtual ~Card() = default; // Virtual destructor
+    virtual ~Card() = default;
 };
 
-
-#endif // CARD_H_INCLUDED
+#endif // CARD_H
