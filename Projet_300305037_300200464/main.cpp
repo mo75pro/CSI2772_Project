@@ -17,11 +17,13 @@ int main() {
         if (file) {
             table = new Table(file, CardFactory::getFactory());
             file.close();
-        } else {
+        }
+        else {
             std::cerr << "Error loading game from file.\n";
             return 1;
         }
-    } else {
+    }
+    else {
         std::cout << "Enter name for Player 1: ";
         std::cin >> player1Name;
         std::cout << "Enter name for Player 2: ";
@@ -70,7 +72,8 @@ int main() {
                     std::cin >> choice;
                     if (choice == 'y') {
                         // Logic to add the card to a chain goes here
-                    } else {
+                    }
+                    else {
                         table->getDiscardPile() += card;
                     }
                 }
@@ -133,7 +136,8 @@ int main() {
     std::string winnerName;
     if (table->win(winnerName)) {
         std::cout << "The winner is " << winnerName << "!" << std::endl;
-    } else {
+    }
+    else {
         std::cout << "No winner yet." << std::endl;
     }
 

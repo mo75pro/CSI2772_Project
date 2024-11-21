@@ -1,0 +1,3 @@
+﻿  Card.cpp
+MSVCRTD.lib(exe_main.obj) : error LNK2019: unresolved external symbol main referenced in function "int __cdecl invoke_main(void)" (?invoke_main@@YAHXZ)
+C:\Users\proBook\OneDrive\Bureau\MES COURS\A24\CSI2772\CSI2772_Project\Projet_300305037_300200464\Project_Card_Game_CS2772\x64\Debug\Project_Card_Game_CS2772.exe : fatal error LNK1120: 1 unresolved externals
